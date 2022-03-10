@@ -1,4 +1,5 @@
 import { BrowserRouter } from 'react-router-dom';
+// import { NewRoom } from './pages/NewRoom';
 import { Routes } from './components/Routes';
 
 function App() {
