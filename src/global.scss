@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Roboto:wght@400;500&display=swap');
+
+:root {
+  --background: #a8a8b3;
+  --white: #f8f8f8;
+  --purple: #835afd;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--white);
+  color: #29292e
+}
+
+body, input, textarea, button {
+  font: 400 16px 'Roboto', sans-serif;
+}
