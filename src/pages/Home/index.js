@@ -19,7 +19,7 @@ export function Home(){
 		}
 
 		console.log(currentUser);
-		push('/romms/new');
+		push('/create-room');
 	};
 
 	return (
