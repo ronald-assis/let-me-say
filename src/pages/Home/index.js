@@ -1,12 +1,20 @@
-import React from 'react';
+import {  useDispatch } from 'react-redux';
+// import { useHistory } from 'react-router-dom';
+import { signInitiate } from '../../Redux/actions';
+import { Button } from '../../components/Button';
 import illustrationImg from '../../assets/images/illustration.svg';
 import logoImg from '../../assets/images/logo.svg';
 import googleIconImg from '../../assets/images/google-icon.svg';
-import { Button } from '../../components/Button';
 
 import './Home.scss';
 
 export function Home(){
+	const dispatch = useDispatch();
+ 
+	const handleCreateRoom = () => {
+		dispatch(signInitiate());
+	};
+
 	return (
 		<div id='home'>
 			<aside>
@@ -17,7 +25,7 @@ export function Home(){
 			<main>
 				<div className='main-content'>
 					<img src={logoImg} alt="Letmeask" />
-					<button className='create-room'>
+					<button className='create-room' onClick={handleCreateRoom}>
 						<img src={googleIconImg} alt="Google logo" />
             Cadastre-se com o Google
 					</button>

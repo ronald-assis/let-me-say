@@ -1,17 +1,30 @@
-import { USER_INFO } from '../actions';
+import { SIGN_START,USER_INFO, SIGN_FAIL } from '../actions';
 
 const INITIAL_STATE = {
-	name: '',
-	email: '',
+	loading: false,
+	currentUser: null,
+	error: null,
 };
 
 const user = (state = INITIAL_STATE, action) => {
 	switch (action.type) {
+	case SIGN_START: {
+		return {
+			...state,
+			loading: true,
+		};
+	}
+
 	case USER_INFO: {
 		return {
 			...state,
-			name: action.user.name,
-			email: action.user.email,
+			currentUser: action.user,
+		};
+	}
+	case SIGN_FAIL: {
+		return {
+			...state,
+			error: action.error,
 		};
 	}
 	default:
