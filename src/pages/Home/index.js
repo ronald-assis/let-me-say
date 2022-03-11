@@ -1,5 +1,5 @@
-import {  useDispatch } from 'react-redux';
-// import { useHistory } from 'react-router-dom';
+import {  useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { signInitiate } from '../../Redux/actions';
 import { Button } from '../../components/Button';
 import illustrationImg from '../../assets/images/illustration.svg';
@@ -9,14 +9,22 @@ import googleIconImg from '../../assets/images/google-icon.svg';
 import './Home.scss';
 
 export function Home(){
+	const {push} = useHistory();
 	const dispatch = useDispatch();
+	const {currentUser} = useSelector((state) => state.user); 
  
 	const handleCreateRoom = () => {
-		dispatch(signInitiate());
+		if (!currentUser) {
+			dispatch(signInitiate());
+		}
+
+		console.log(currentUser);
+		push('/romms/new');
 	};
 
 	return (
 		<div id='home'>
+			{console.log(currentUser)}
 			<aside>
 				<img src={illustrationImg} alt="Illustration" />
 				<strong>Conte um pouco mais do seu dia</strong>

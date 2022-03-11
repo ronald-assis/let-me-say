@@ -22,8 +22,41 @@ export const signInitiate = () => {
 	return (dispatch) => {
 		dispatch(sing_start());
 		auth.signInWithPopup(provider).then(({user}) => {
-			console.log(user);
-			dispatch(saveInfoUser(user));
+			if (user) {
+				const {displayName, photoURL, uid} = user;
+
+				if (!displayName || !photoURL) {
+					throw new Error('Missing information from Google Account.');
+				}
+				const info = {
+					id: uid,
+					name: displayName,
+					avatar: photoURL
+				};
+				dispatch(saveInfoUser(info));
+			}
 		}).catch((error) => dispatch(signFail(error)));
 	};
 };
+
+
+// On Auth State Changed
+// export const authStateChanged = () => {
+// 	return (dispatch) => {
+// 		auth.onAuthStateChanged((user) => {
+// 			if (user) {
+// 				const {displayName, photoURL, uid} = user;
+
+// 				if (!displayName || !photoURL) {
+// 					throw new Error('Missing information from Google Account.');
+// 				}
+// 				const info = {
+// 					id: uid,
+// 					name: displayName,
+// 					avatar: photoURL
+// 				};
+// 				dispatch(saveInfoUser(info));
+// 			}
+// 		});
+// 	};
+// };
