@@ -62,7 +62,7 @@ export function Room({match: {params: id}}) {
 							<img src={currentUser?.avatar} alt={currentUser?.name} />
 							<span>{currentUser?.name}</span>
 						</div>
-						<Button type="submits">
+						<Button type="submits" isOutlined={false}>
 							Enviar conversa
 						</Button>
 					</div>
