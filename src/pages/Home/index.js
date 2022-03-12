@@ -13,9 +13,9 @@ export function Home(){
 	const dispatch = useDispatch();
 	const {currentUser} = useSelector((state) => state.user); 
  
-	const handleCreateRoom = () => {
+	const handleCreateRoom = async () => {
 		if (!currentUser) {
-			dispatch(signInitiate());
+			await dispatch(signInitiate());
 		}
 
 		console.log(currentUser);

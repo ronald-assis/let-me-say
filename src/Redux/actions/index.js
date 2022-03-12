@@ -19,15 +19,18 @@ export const signFail = (error) => ({
 });
 
 export const signInitiate = () => {
-	return (dispatch) => {
+	return async (dispatch) => {
 		dispatch(sing_start());
-		auth.signInWithPopup(provider).then(({user}) => {
-			if (user) {
-				const {displayName, photoURL, uid} = user;
-
+		try {
+			const result = await auth.signInWithPopup(provider);
+	
+			if (result.user) {
+				const {displayName, photoURL, uid} = result.user;
+				
 				if (!displayName || !photoURL) {
 					throw new Error('Missing information from Google Account.');
 				}
+	
 				const info = {
 					id: uid,
 					name: displayName,
@@ -35,7 +38,9 @@ export const signInitiate = () => {
 				};
 				dispatch(saveInfoUser(info));
 			}
-		}).catch((error) => dispatch(signFail(error)));
+		} catch(error) {
+			dispatch(signFail(error));
+		}
 	};
 };
 
