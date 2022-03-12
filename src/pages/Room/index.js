@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -6,34 +6,16 @@ import { database } from '../../services/firebase';
 import { RoomCode } from '../../components/RoomCode';
 import {Button} from '../../components/Button';
 import { Talks } from '../../components/Talks';
+import { useRoom } from '../../Hooks/useRoom';
 
 import logoImg from '../../assets/images/logo.svg';
 import './Room.scss';
 
 export function Room({match: {params: id}}) {
 	const [newTalk, setNewTalk] = useState('');
-	const [talks, setTalks] = useState([]);
-	const [title,setTitle] = useState('');
 	const roomId = id.id;
+	const {talks, title} = useRoom(roomId);
 	const {currentUser} = useSelector((state) => state.user); 
-
-	useEffect(() => {
-		const roomRef = database.ref(`rooms/${roomId}`);
-
-		roomRef.on('value', (room) => {
-			const databaseRoom = room.val();
-			const parsedTalks = Object.entries(databaseRoom.talks ?? {}).map(([key, value]) => ({
-				id: key,
-				content: value.content,
-				author: value.author,
-				isHighlighted: value.isHighlighted,
-				isAnswered: value.isAnswered,
-			}));
-
-			setTitle(databaseRoom.title);
-			setTalks(parsedTalks);
-		});
-	}, [roomId]);
 
 	const handleSendTalk = async (event) => {
 		event.preventDefault();

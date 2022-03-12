@@ -1,7 +1,7 @@
-import {  useDispatch, useSelector } from 'react-redux';
+import {   useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { signInitiate } from '../../Redux/actions';
 
+import { useAuth } from '../../Hooks/useAuth';
 import illustrationImg from '../../assets/images/illustration.svg';
 import logoImg from '../../assets/images/logo.svg';
 import googleIconImg from '../../assets/images/google-icon.svg';
@@ -10,12 +10,11 @@ import './Home.scss';
 
 export function Home(){	
 	const {push} = useHistory();
-	const dispatch = useDispatch();
 	const {currentUser} = useSelector((state) => state.user); 
  
 	const handleCreateRoom = async () => {
 		if (!currentUser) {
-			await dispatch(signInitiate());
+			await useAuth();
 		}
 
 		console.log(currentUser);
