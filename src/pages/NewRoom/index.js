@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import {  useSelector } from 'react-redux';
 import { Button } from '../../components/Button';
 import {database} from '../../services/firebase';
@@ -9,16 +9,18 @@ import logoImg from '../../assets/images/logo.svg';
 import '../Home/Home.scss';
 
 export function NewRoom(){
-	const {currentUser} = useSelector((state) => state.user); 
-	const history = useHistory();
 	const [newRoom, SetNewRoom] = useState('');
+	const [roomCode, setRoomCode] = useState();
+
+	const {currentUser} = useSelector((state) => state.user); 
+	const {push} = useHistory();
 
 
 	const handleCreateRoom = async (event) => {
 		event.preventDefault();
 
 		if (newRoom.trim() === '') return;
-		
+
 		const roomRef = database.ref('rooms');
 
 		const firebaseRoom = await roomRef.push({
@@ -26,9 +28,25 @@ export function NewRoom(){
 			authorId: currentUser?.id,
 		});
 
-		history.push(`/rooms/${firebaseRoom.key}`);
+		push(`/rooms/${firebaseRoom.key}`);
 
 	};
+
+	const handleJoinRoom = async (event) => {
+		event.preventDefault();
+
+		if (roomCode.trim() === '') return;
+
+		const roomRef = await database.ref(`rooms/${roomCode}`).get();
+
+		if (!roomRef.exists()) {
+			alert('Room does not exists');
+			return; 
+		}
+
+		push(`/rooms/${roomCode}`);
+	};
+
 
 	return (
 		<div id='home'>
@@ -51,7 +69,16 @@ export function NewRoom(){
 						/>
 						<Button type='submit'>Criar sala</Button>
 					</form>
-					<p>Quer entrar em uma sala existente? <Link to="/">clique aqui</Link></p>
+					<div className='separator'>ou entre em uma sala</div>
+					<form onSubmit={handleJoinRoom}> 
+						<input 
+							type="text"
+							name=""
+							value={roomCode}
+							onChange={(event) => setRoomCode(event.target.value)}
+							placeholder='Digite o código da sala' />
+						<Button type='submit'>Entrar na sala</Button>
+					</form>
 				</div>
 			</main>
 		</div>
