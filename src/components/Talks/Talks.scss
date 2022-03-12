@@ -31,8 +31,34 @@
 
       span {
         margin-left: 8px;
-        color: #737380;
+        color: var(--gray-dark);
         font-size: 14px;
+      }
+    }
+
+    button {
+      border: 0;
+      background-color: transparent;
+      cursor: pointer;
+      transition: filter 0.2s;
+
+      &.like-button {
+        display: flex;
+        align-items: flex-end;
+        color: var(--gray-dark);
+        gap: 8px ;
+
+        &.liked {
+          color: var(--purple);
+
+          svg path {
+            stroke: var(--purple);
+          }
+        }
+      }
+
+      &:hover {
+        filter: brightness(0.7);
       }
     }
   }

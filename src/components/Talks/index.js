@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import './Talks.scss';
 
-export function Talks({content, author}) {
+export function Talks({content, author, children}) {
 	return (
 		<div className="talks">
 			<p>{content}</p>
@@ -10,7 +10,9 @@ export function Talks({content, author}) {
 					<img src={author.avatar} alt={author.name} />
 					<span>{author.name}</span>
 				</div>
-				<div></div>
+				<div>
+					{children}
+				</div>
 			</footer>
 		</div>
 	);
@@ -22,4 +24,5 @@ Talks.propTypes = {
 		name: PropTypes.string,
 		avatar: PropTypes.string,
 	}).isRequired,
+	children: PropTypes.node,
 };
