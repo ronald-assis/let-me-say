@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { database } from '../../services/firebase';
 import { RoomCode } from '../../components/RoomCode';
 import {Button} from '../../components/Button';
+import { Talks } from '../../components/Talks';
 
 import logoImg from '../../assets/images/logo.svg';
 import './Room.scss';
@@ -84,6 +85,16 @@ export function Room({match: {params: id}}) {
 						</Button>
 					</div>
 				</form>
+
+				<div className="talks-list">
+					{talks.map((talk) => (
+						<Talks
+							key={talk.id}
+							content={talk.content}
+							author={talk.author}
+						/>
+					))}
+				</div>
 			</main>
 		</div>
 	);
