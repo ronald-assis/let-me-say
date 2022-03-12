@@ -4,6 +4,8 @@
   --background: #a8a8b3;
   --white: #f8f8f8;
   --purple: #835afd;
+  --black: #29292e;
+  --pinck: #e559f9;
 }
 
 * {
@@ -14,7 +16,7 @@
 
 body {
   background-color: var(--white);
-  color: #29292e
+  color: var(--black)
 }
 
 body, input, textarea, button {
