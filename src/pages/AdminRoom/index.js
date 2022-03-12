@@ -9,6 +9,7 @@ import { Talks } from '../../components/Talks';
 import { useRoom } from '../../Hooks/useRoom';
 
 import logoImg from '../../assets/images/logo.svg';
+import deleteImg from '../../assets/images/delete.svg';
 import '../Room/Room.scss';
 
 export function AdminRoom({match: {params: id}}) {
@@ -33,6 +34,12 @@ export function AdminRoom({match: {params: id}}) {
 
 		await database.ref(`rooms/${roomId}/talks`).push(talk);
 		setNewTalk('');
+	};
+
+	const handleDeleteTalk = async (talkId) => {
+		if (window.confirm('Tem certeza que você deseja excluir esta pergunta?')) {
+			await database.ref(`rooms/${roomId}/talks/${talkId}`).remove();
+		}
 	};
 
 	return (
@@ -77,7 +84,14 @@ export function AdminRoom({match: {params: id}}) {
 							key={talk.id}
 							content={talk.content}
 							author={talk.author}
-						/>
+						>
+							<button
+								type='button'
+								onClick={() => handleDeleteTalk(talk.id)}
+							>
+								<img src={deleteImg} alt="Remove talk" />
+							</button>
+						</Talks>
 					))}
 				</div>
 			</main>
