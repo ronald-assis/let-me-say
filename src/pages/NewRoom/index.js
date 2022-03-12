@@ -17,10 +17,8 @@ export function NewRoom(){
 	const handleCreateRoom = async (event) => {
 		event.preventDefault();
 
-		if (newRoom.trim() === '') {
-			return;
-		}
-
+		if (newRoom.trim() === '') return;
+		
 		const roomRef = database.ref('rooms');
 
 		const firebaseRoom = await roomRef.push({
