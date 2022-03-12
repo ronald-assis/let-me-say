@@ -44,6 +44,11 @@ export function NewRoom(){
 			return; 
 		}
 
+		if (roomRef.val().endedAt) {
+			alert('Room already closed.');
+			return;
+		}
+
 		push(`/rooms/${roomCode}`);
 	};
 
@@ -67,7 +72,7 @@ export function NewRoom(){
 							value={newRoom}
 							placeholder='nome da sala'
 						/>
-						<Button type='submit'>Criar sala</Button>
+						<Button type='submit' isOutlined={false}>Criar sala</Button>
 					</form>
 					<div className='separator'>ou entre em uma sala</div>
 					<form onSubmit={handleJoinRoom}> 
@@ -77,7 +82,7 @@ export function NewRoom(){
 							value={roomCode}
 							onChange={(event) => setRoomCode(event.target.value)}
 							placeholder='Digite o código da sala' />
-						<Button type='submit'>Entrar na sala</Button>
+						<Button type='submit' isOutlined={false}>Entrar na sala</Button>
 					</form>
 				</div>
 			</main>

@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import { database } from '../../services/firebase';
 import { RoomCode } from '../../components/RoomCode';
@@ -16,6 +17,7 @@ export function AdminRoom({match: {params: id}}) {
 	const [newTalk, setNewTalk] = useState('');
 	const roomId = id.id;
 	const {talks, title} = useRoom(roomId);
+	const {push} = useHistory();
 	const {currentUser} = useSelector((state) => state.user); 
 
 	const handleSendTalk = async (event) => {
@@ -36,6 +38,14 @@ export function AdminRoom({match: {params: id}}) {
 		setNewTalk('');
 	};
 
+	const handleendRoom = async () => {
+		await database.ref(`rooms/${roomId}`).update({
+			endedAt: new Date(),
+		});
+
+		push('/');
+	};
+
 	const handleDeleteTalk = async (talkId) => {
 		if (window.confirm('Tem certeza que você deseja excluir esta pergunta?')) {
 			await database.ref(`rooms/${roomId}/talks/${talkId}`).remove();
@@ -49,7 +59,7 @@ export function AdminRoom({match: {params: id}}) {
 					<img src={logoImg} alt="Letmeask" />
 					<div>
 						<RoomCode code={roomId} />
-						<Button isOutlined>Encerrar sala</Button>
+						<Button isOutlined onClick={handleendRoom}>Encerrar sala</Button>
 					</div>
 				</div>
 			</header>
