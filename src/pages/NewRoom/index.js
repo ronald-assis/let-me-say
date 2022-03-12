@@ -11,7 +11,7 @@ import '../Home/Home.scss';
 export function NewRoom(){
 	const {currentUser} = useSelector((state) => state.user); 
 	const history = useHistory();
-	const [newRoom, SetNewRoom] = useState('test de sala');
+	const [newRoom, SetNewRoom] = useState('');
 
 
 	const handleCreateRoom = async (event) => {

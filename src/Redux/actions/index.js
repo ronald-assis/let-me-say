@@ -41,22 +41,22 @@ export const signInitiate = () => {
 
 
 // On Auth State Changed
-// export const authStateChanged = () => {
-// 	return (dispatch) => {
-// 		auth.onAuthStateChanged((user) => {
-// 			if (user) {
-// 				const {displayName, photoURL, uid} = user;
+export const authStateChanged = () => {
+	return (dispatch) => {
+		auth.onAuthStateChanged((user) => {
+			if (user) {
+				const {displayName, photoURL, uid} = user;
 
-// 				if (!displayName || !photoURL) {
-// 					throw new Error('Missing information from Google Account.');
-// 				}
-// 				const info = {
-// 					id: uid,
-// 					name: displayName,
-// 					avatar: photoURL
-// 				};
-// 				dispatch(saveInfoUser(info));
-// 			}
-// 		});
-// 	};
-// };
+				if (!displayName || !photoURL) {
+					throw new Error('Missing information from Google Account.');
+				}
+				const info = {
+					id: uid,
+					name: displayName,
+					avatar: photoURL
+				};
+				dispatch(saveInfoUser(info));
+			}
+		});
+	};
+};
