@@ -4,6 +4,7 @@ import {  useSelector } from 'react-redux';
 
 import { Button } from '../../components/Button';
 import {database} from '../../services/firebase';
+import { useAuthStateChanged } from '../../Hooks/useAuthStateChanged';
 
 import illustrationImg from '../../assets/images/illustration.svg';
 import logoImg from '../../assets/images/logo.svg';
@@ -18,6 +19,7 @@ export function NewRoom(){
 	const {currentUser} = useSelector((state) => state.user); 
 	const {push} = useHistory();
 
+	useAuthStateChanged();
 
 	useEffect(() => {
 		const roomAuthor = database.ref(`rooms/${roomCode}`);

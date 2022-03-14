@@ -19,13 +19,11 @@ export function Home(){
 			await dispatch(signInitiate());
 		}
 
-		console.log(currentUser);
 		push('/create-room');
 	};
 
 	return (
 		<div id='home'>
-			{console.log(currentUser)}
 			<aside>
 				<img src={illustrationImg} alt="Illustration" />
 				<strong>Conte um pouco mais do seu dia</strong>

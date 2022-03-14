@@ -8,6 +8,7 @@ import { RoomCode } from '../../components/RoomCode';
 import {Button} from '../../components/Button';
 import { Talks } from '../../components/Talks';
 import { useRoom } from '../../Hooks/useRoom';
+import { useAuthStateChanged } from '../../Hooks/useAuthStateChanged';
 
 import logoImg from '../../assets/images/logo.svg';
 import deleteImg from '../../assets/images/delete.svg';
@@ -21,6 +22,8 @@ export function AdminRoom({match: {params: id}}) {
 	const {talks, title} = useRoom(roomId);
 	const {push} = useHistory();
 	const {currentUser} = useSelector((state) => state.user); 
+
+	useAuthStateChanged();
 
 	const handleSendTalk = async (event) => {
 		event.preventDefault();

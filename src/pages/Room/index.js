@@ -7,6 +7,7 @@ import { RoomCode } from '../../components/RoomCode';
 import {Button} from '../../components/Button';
 import { Talks } from '../../components/Talks';
 import { useRoom } from '../../Hooks/useRoom';
+import { useAuthStateChanged } from '../../Hooks/useAuthStateChanged';
 
 import logoImg from '../../assets/images/logo.svg';
 import avatarImg from '../../assets/images/avatar.svg';
@@ -17,6 +18,8 @@ export function Room({match: {params: id}}) {
 	const roomId = id.id;
 	const {talks, title} = useRoom(roomId);
 	const {currentUser} = useSelector((state) => state.user); 
+
+	useAuthStateChanged();
 
 	const handleSendTalk = async (event) => {
 		event.preventDefault();
