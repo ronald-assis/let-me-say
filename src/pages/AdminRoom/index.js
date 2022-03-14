@@ -2,6 +2,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import Modal from 'react-modal';
 
 import { database } from '../../services/firebase';
 import { RoomCode } from '../../components/RoomCode';
@@ -14,13 +15,17 @@ import logoImg from '../../assets/images/logo.svg';
 import deleteImg from '../../assets/images/delete.svg';
 import checkImg from '../../assets/images/check.svg';
 import answerImg from '../../assets/images/answer.svg';
+import excluir from '../../assets/images/excluir.png';
+import close from '../../assets/images/close.png';
 import '../Room/Room.scss';
 
 export function AdminRoom({match: {params: id}}) {
 	const [newTalk, setNewTalk] = useState('');
+	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+	const [isCloseModalOpen, setIsCloseModalOpen] = useState(false);
 	const roomId = id.id;
-	const {talks, title} = useRoom(roomId);
 	const {push} = useHistory();
+	const {talks, title} = useRoom(roomId);
 	const {currentUser} = useSelector((state) => state.user); 
 
 	useAuthStateChanged();
@@ -52,9 +57,8 @@ export function AdminRoom({match: {params: id}}) {
 	};
 
 	const handleDeleteTalk = async (talkId) => {
-		if (window.confirm('Tem certeza que você deseja excluir esta pergunta?')) {
-			await database.ref(`rooms/${roomId}/talks/${talkId}`).remove();
-		}
+		await database.ref(`rooms/${roomId}/talks/${talkId}`).remove();
+		setIsDeleteModalOpen(!isDeleteModalOpen);
 	};
 
 	const handleCheckTalkAsAnwered = async (talkId) => {
@@ -71,6 +75,35 @@ export function AdminRoom({match: {params: id}}) {
 		});
 	};
 
+	const toggleDeleteModal = () => {
+		setIsDeleteModalOpen(!isDeleteModalOpen);
+	};
+
+	const toggleCloseModal = () => {
+		setIsCloseModalOpen(!isCloseModalOpen);
+
+	};
+
+	const customSyles = {
+		content: {
+			top: '50%',
+			left: '50%',
+			display: 'flex',
+			alignItems: 'center',
+			justifyContent: 'center',
+			flexDirection: 'column',
+			transform: 'translate(-50%, -50%)',
+			backgroundColor: '#F8F8F8',
+			width: '590px',
+			height: '362px',
+			borderRadius: '8px',
+			gap: '16px',
+		},
+
+		overlay: {
+			backgroundColor: 'rgb(5 2 6 / 80%',
+		}
+	};
 
 	return (
 		<div id='page-room'>
@@ -79,9 +112,24 @@ export function AdminRoom({match: {params: id}}) {
 					<img src={logoImg} alt="Letmeask" />
 					<div>
 						<RoomCode code={roomId} />
-						<Button isOutlined onClick={handleendRoom}>Encerrar sala</Button>
+						<Button isOutlined onClick={toggleCloseModal}>Encerrar sala</Button>
 					</div>
 				</div>
+
+				<Modal
+					isOpen={isCloseModalOpen}
+					onRequestClose={toggleCloseModal}						
+					style={customSyles}
+				>
+					<img src={close} alt="Close room" />
+					<h1>Encerrar sala</h1>
+					<p>Tem certeza que você deseja encerrar esta sala?</p>
+					<div>
+						<button onClick={toggleCloseModal}>Cancelar</button>
+						<button onClick={handleendRoom}>Sim,encerrar</button>
+					</div>
+
+				</Modal>
 			</header>
 
 			<main>
@@ -137,10 +185,31 @@ export function AdminRoom({match: {params: id}}) {
 
 							<button
 								type='button'
-								onClick={() => handleDeleteTalk(talk.id)}
+								onClick={toggleDeleteModal}
 							>
 								<img src={deleteImg} alt="Remove talk" />
 							</button>
+
+							<Modal
+								isOpen={isDeleteModalOpen}
+								onRequestClose={toggleDeleteModal}
+								style={customSyles}
+							>
+								<img src={excluir} alt="excluir talk" />
+								<h1>Excluir conversa</h1>
+								<p>Tem certeza que você deseja excluir esta conversa?</p>
+								<div>
+									<button onClick={toggleDeleteModal}>Cancelar</button>	
+									<button
+										type='button'
+										onClick={() => handleDeleteTalk(talk.id)}
+									>
+										Sim, excluir
+									</button>
+
+								</div>
+							</Modal>
+
 						</Talks>
 					))}
 				</div>
