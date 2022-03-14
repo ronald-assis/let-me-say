@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import {  useSelector } from 'react-redux';
+
 import { Button } from '../../components/Button';
 import {database} from '../../services/firebase';
+
 import illustrationImg from '../../assets/images/illustration.svg';
 import logoImg from '../../assets/images/logo.svg';
 
@@ -10,11 +12,25 @@ import '../Home/Home.scss';
 
 export function NewRoom(){
 	const [newRoom, SetNewRoom] = useState('');
-	const [roomCode, setRoomCode] = useState();
+	const [roomCode, setRoomCode] = useState('');
+	const [authorId, setAuthorId] = useState('');
 
 	const {currentUser} = useSelector((state) => state.user); 
 	const {push} = useHistory();
 
+
+	useEffect(() => {
+		const roomAuthor = database.ref(`rooms/${roomCode}`);
+
+		roomAuthor.on('value', (room) => {
+			const databaseRoom = room.val();
+			setAuthorId(databaseRoom.authorId);
+		});
+
+		return () => {
+			roomAuthor.off('value');
+		};
+	},[roomCode]);
 
 	const handleCreateRoom = async (event) => {
 		event.preventDefault();
@@ -28,7 +44,7 @@ export function NewRoom(){
 			authorId: currentUser?.id,
 		});
 
-		push(`/rooms/${firebaseRoom.key}`);
+		push(`/admin/rooms/${firebaseRoom.key}`);
 
 	};
 
@@ -49,9 +65,11 @@ export function NewRoom(){
 			return;
 		}
 
+		if (authorId === currentUser.id) {
+			return push(`/admin/rooms/${roomCode}`);
+		}
 		push(`/rooms/${roomCode}`);
 	};
-
 
 	return (
 		<div id='home'>
