@@ -11,6 +11,8 @@ import { useRoom } from '../../Hooks/useRoom';
 
 import logoImg from '../../assets/images/logo.svg';
 import deleteImg from '../../assets/images/delete.svg';
+import checkImg from '../../assets/images/check.svg';
+import answerImg from '../../assets/images/answer.svg';
 import '../Room/Room.scss';
 
 export function AdminRoom({match: {params: id}}) {
@@ -51,6 +53,21 @@ export function AdminRoom({match: {params: id}}) {
 			await database.ref(`rooms/${roomId}/talks/${talkId}`).remove();
 		}
 	};
+
+	const handleCheckTalkAsAnwered = async (talkId) => {
+		await database.ref(`rooms/${roomId}/talks/${talkId}`).update({
+			isAnswered: true,
+		});
+
+	};
+
+
+	const handleHighlightTalk = async (talkId) => {
+		await database.ref(`rooms/${roomId}/talks/${talkId}`).update({
+			isHighlighted: true,
+		});
+	};
+
 
 	return (
 		<div id='page-room'>
@@ -94,7 +111,27 @@ export function AdminRoom({match: {params: id}}) {
 							key={talk.id}
 							content={talk.content}
 							author={talk.author}
+							isAnswered={talk.isAnswered}
+							isHighlighted={talk.isHighlighted}
 						>
+							{!talk.isAnswered && (
+								<>
+									<button
+										type='button'
+										onClick={() => handleCheckTalkAsAnwered(talk.id)}
+									>
+										<img src={checkImg} alt="Check the talk an answered" />
+									</button>
+
+									<button
+										type='button'
+										onClick={() => handleHighlightTalk(talk.id)}
+									>
+										<img src={answerImg} alt="highlight the talk" />
+									</button>
+								</>
+							)}
+
 							<button
 								type='button'
 								onClick={() => handleDeleteTalk(talk.id)}

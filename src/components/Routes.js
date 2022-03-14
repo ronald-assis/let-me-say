@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import { Route, Switch } from 'react-router-dom';
 import {NewRoom} from '../pages/NewRoom';
 import {Home} from '../pages/Home';

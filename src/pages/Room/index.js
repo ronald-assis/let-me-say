@@ -9,6 +9,7 @@ import { Talks } from '../../components/Talks';
 import { useRoom } from '../../Hooks/useRoom';
 
 import logoImg from '../../assets/images/logo.svg';
+import avatarImg from '../../assets/images/avatar.svg';
 import './Room.scss';
 
 export function Room({match: {params: id}}) {
@@ -69,7 +70,10 @@ export function Room({match: {params: id}}) {
 
 					<div className="form-footer">
 						<div className="user-info">
-							<img src={currentUser?.avatar} alt={currentUser?.name} />
+							<img
+								src={!currentUser?.avatar ? avatarImg : currentUser.avatar}
+								alt={currentUser?.name}
+							/>
 							<span>{currentUser?.name}</span>
 						</div>
 						<Button type="submits" isOutlined={false}>
@@ -84,6 +88,8 @@ export function Room({match: {params: id}}) {
 							key={talk.id}
 							content={talk.content}
 							author={talk.author}
+							isAnswered={talk.isAnswered}
+							isHighlighted={talk.isHighlighted}
 						>
 							<button
 								className={`like-button ${talk.likeCount ? 'liked' : ''}`}
