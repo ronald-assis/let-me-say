@@ -29,6 +29,9 @@
     max-width: 800px;
     margin: 0 auto;
 
+
+
+
     .room-title {
       margin: 32px 0 24px;
       display: flex;
@@ -94,7 +97,41 @@
       margin-top: 32px
     }
   }
+
+  @media screen and (max-width: 420px) {
+    header {
+      padding: 14px 0;
+      
+      .content {
+        justify-content: center;
+
+        > img {
+        display: none;
+      }
+
+
+      > div {       
+        gap: 6px;
+      }
+      .room-code {
+        width: 226px;
+
+        &:hover {
+          filter: brightness(0.9);
+        }
+      }
+    }
+
+    }
+
+     main {
+       width: 80%;
+       margin: auto;
+     }
+  }
 }
+
+
 
 .ReactModalPortal {
   .ReactModal__Content {

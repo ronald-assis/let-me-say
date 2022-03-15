@@ -53,7 +53,7 @@ export function Room({match: {params: id}}) {
 		<div id='page-room'>
 			<header>
 				<div className="content">
-					<img src={logoImg} alt="Letmeask" />
+					<img src={logoImg} alt="Letmeask" className='logo' />
 					<RoomCode code={roomId} />
 				</div>
 			</header>
