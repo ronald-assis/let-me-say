@@ -20,8 +20,8 @@ export const signFail = (error) => ({
 
 export const signInitiate = () => {
 	return async (dispatch) => {
-		dispatch(sing_start());
 		try {
+			dispatch(sing_start());
 			const result = await auth.signInWithPopup(provider);
 	
 			if (result.user) {

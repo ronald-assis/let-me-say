@@ -43,5 +43,5 @@ Talks.propTypes = {
 	}).isRequired,
 	isAnswered: PropTypes.bool,
 	isHighlighted: PropTypes.bool,
-	children: PropTypes.node,
+	children: PropTypes.node.isRequired,
 };

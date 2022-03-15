@@ -101,7 +101,7 @@ export function AdminRoom({match: {params: id}}) {
 		},
 
 		overlay: {
-			backgroundColor: 'rgb(5 2 6 / 80%',
+			backgroundColor: 'rgb(5 2 6 / 80%)',
 		}
 	};
 
@@ -128,7 +128,6 @@ export function AdminRoom({match: {params: id}}) {
 						<button onClick={toggleCloseModal}>Cancelar</button>
 						<button onClick={handleendRoom}>Sim,encerrar</button>
 					</div>
-
 				</Modal>
 			</header>
 
@@ -150,7 +149,7 @@ export function AdminRoom({match: {params: id}}) {
 							<img src={currentUser?.avatar} alt={currentUser?.name} />
 							<span>{currentUser?.name}</span>
 						</div>
-						<Button type="submits" isOutlined={false}>
+						<Button type="submit" isOutlined={false}>
 							Enviar conversa
 						</Button>
 					</div>

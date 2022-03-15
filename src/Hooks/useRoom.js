@@ -25,11 +25,11 @@ export function useRoom(roomId) {
 
 			setTitle(databaseRoom.title);
 			setTalks(parsedTalks);
-
-			return () => {
-				roomRef.off('value');
-			};
 		});
+
+		return () => {
+			roomRef.off('value');
+		};
 	}, [roomId, currentUser?.id]);
   
 
