@@ -1,7 +1,7 @@
 import {   useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import {signInitiate} from '../../Redux/actions';
+import {signInitiate} from '../../redux/actions';
 
 import illustrationImg from '../../assets/images/illustration.svg';
 import logoImg from '../../assets/images/logo.svg';

@@ -10,7 +10,7 @@ import {Button} from '../../components/Button';
 import { Talks } from '../../components/Talks';
 import { useRoom } from '../../hooks/useRoom';
 import { useAuthStateChanged } from '../../hooks/useAuthStateChanged';
-import {logoutInitiate} from '../../Redux/actions';
+import {logoutInitiate} from '../../redux/actions';
 
 import logoImg from '../../assets/images/logo.svg';
 import deleteImg from '../../assets/images/delete.svg';
