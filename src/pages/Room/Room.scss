@@ -115,19 +115,23 @@
           padding: 0;
 
          &:nth-child(2) {
-           width: 61px;
+           width: 56px;
          }
 
          &:nth-child(3) {
-           width: 73px;
+           width: 70px;
          }
        }
       }
       .room-code {
-        width: 226px;
+        width: 210px;
 
         &:hover {
           filter: brightness(0.9);
+        }
+
+        span {
+          padding: 0;
         }
       }
     }
