@@ -109,9 +109,19 @@
         display: none;
       }
 
-
       > div {       
         gap: 6px;
+        button{
+          padding: 0;
+
+         &:nth-child(2) {
+           width: 61px;
+         }
+
+         &:nth-child(3) {
+           width: 73px;
+         }
+       }
       }
       .room-code {
         width: 226px;

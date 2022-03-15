@@ -3,8 +3,13 @@ import {auth, provider} from '../../services/firebase';
 export const SIGN_START = 'SIGN_START';
 export const USER_INFO = 'USER_INFO';
 export const SIGN_FAIL = 'SIGN_FAIL';
+export const LOGOUT_START = 'LOGOUT_START';
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+export const LOGOUT_FAIL = 'LOGOUT_FAIL';
 
-export const sing_start = () => ({
+
+
+export const sign_start = () => ({
 	type: SIGN_START,
 });
 
@@ -18,10 +23,23 @@ export const signFail = (error) => ({
 	error: error,
 });
 
+export const logoutStart = () => ({
+	type: LOGOUT_START,
+});
+
+export const logoutSuccess = () => ({
+	type: LOGOUT_SUCCESS,
+});
+
+export const logoutFail = (error) => ({
+	type: LOGOUT_FAIL,
+	error: error,
+});
+
 export const signInitiate = () => {
 	return async (dispatch) => {
 		try {
-			dispatch(sing_start());
+			dispatch(sign_start());
 			const result = await auth.signInWithPopup(provider);
 	
 			if (result.user) {
@@ -40,6 +58,19 @@ export const signInitiate = () => {
 			}
 		} catch(error) {
 			dispatch(signFail(error));
+		}
+	};
+};
+
+export const logoutInitiate = () => {
+	return async (dispatch) => {
+		try {
+			dispatch(logoutStart());
+			await auth.signOut();
+			dispatch(logoutSuccess());
+
+		} catch(error) {
+			dispatch(logoutFail(error));
 		}
 	};
 };

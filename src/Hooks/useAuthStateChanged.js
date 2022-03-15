@@ -9,7 +9,7 @@ export function useAuthStateChanged() {
 		const unsubscribe = dispatch(authStateChanged());
 
 		return () => {
-			unsubscribe();
+			unsubscribe;
 		};
 	},[]);
 }

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Modal from 'react-modal';
 
@@ -10,6 +10,7 @@ import {Button} from '../../components/Button';
 import { Talks } from '../../components/Talks';
 import { useRoom } from '../../Hooks/useRoom';
 import { useAuthStateChanged } from '../../Hooks/useAuthStateChanged';
+import {logoutInitiate} from '../../Redux/actions';
 
 import logoImg from '../../assets/images/logo.svg';
 import deleteImg from '../../assets/images/delete.svg';
@@ -26,6 +27,7 @@ export function AdminRoom({match: {params: id}}) {
 	const roomId = id.id;
 	const {push} = useHistory();
 	const {talks, title} = useRoom(roomId);
+	const dispatch = useDispatch();
 	const {currentUser} = useSelector((state) => state.user); 
 
 	useAuthStateChanged();
@@ -48,7 +50,7 @@ export function AdminRoom({match: {params: id}}) {
 		setNewTalk('');
 	};
 
-	const handleendRoom = async () => {
+	const handleEndRoom = async () => {
 		await database.ref(`rooms/${roomId}`).update({
 			endedAt: new Date(),
 		});
@@ -105,6 +107,11 @@ export function AdminRoom({match: {params: id}}) {
 		}
 	};
 
+	const handleAuth = () => {
+		dispatch(logoutInitiate());
+		push('/');
+	};
+
 	return (
 		<div id='page-room'>
 			<header>
@@ -112,6 +119,7 @@ export function AdminRoom({match: {params: id}}) {
 					<img src={logoImg} alt="Letmeask" />
 					<div>
 						<RoomCode code={roomId} />
+						<Button isOutlined={false} onClick={handleAuth}>Logout</Button>
 						<Button isOutlined onClick={toggleCloseModal}>Encerrar sala</Button>
 					</div>
 				</div>
@@ -126,7 +134,7 @@ export function AdminRoom({match: {params: id}}) {
 					<p>Tem certeza que você deseja encerrar esta sala?</p>
 					<div>
 						<button onClick={toggleCloseModal}>Cancelar</button>
-						<button onClick={handleendRoom}>Sim,encerrar</button>
+						<button onClick={handleEndRoom}>Sim,encerrar</button>
 					</div>
 				</Modal>
 			</header>

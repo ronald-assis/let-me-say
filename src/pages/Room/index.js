@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { database } from '../../services/firebase';
@@ -8,15 +8,19 @@ import {Button} from '../../components/Button';
 import { Talks } from '../../components/Talks';
 import { useRoom } from '../../Hooks/useRoom';
 import { useAuthStateChanged } from '../../Hooks/useAuthStateChanged';
+import {logoutInitiate} from '../../Redux/actions';
 
 import logoImg from '../../assets/images/logo.svg';
 import avatarImg from '../../assets/images/avatar.svg';
 import './Room.scss';
+import { useHistory } from 'react-router-dom';
 
 export function Room({match: {params: id}}) {
 	const [newTalk, setNewTalk] = useState('');
 	const roomId = id.id;
+	const {push} = useHistory();
 	const {talks, title} = useRoom(roomId);
+	const dispatch = useDispatch();
 	const {currentUser} = useSelector((state) => state.user); 
 
 	useAuthStateChanged();
@@ -49,12 +53,20 @@ export function Room({match: {params: id}}) {
 		}
 	};
 
+	const handleAuth = () => {
+		dispatch(logoutInitiate());
+		push('/');
+	};
+
 	return (
 		<div id='page-room'>
 			<header>
 				<div className="content">
 					<img src={logoImg} alt="Letmeask" className='logo' />
-					<RoomCode code={roomId} />
+					<div>
+						<RoomCode code={roomId} />
+						<Button isOutlined={false} onClick={handleAuth}>Logout</Button>
+					</div>
 				</div>
 			</header>
 
