@@ -132,6 +132,11 @@
 
         span {
           padding: 0;
+
+          &:nth-child(3) {
+          top: 0;
+          left: 46px;
+          }
         }
       }
     }

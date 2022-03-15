@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { authStateChanged } from '../Redux/actions';
+import { authStateChanged } from '../redux/actions';
 
 export function useAuthStateChanged() {
 	const dispatch = useDispatch();

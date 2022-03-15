@@ -6,8 +6,8 @@ import { database } from '../../services/firebase';
 import { RoomCode } from '../../components/RoomCode';
 import {Button} from '../../components/Button';
 import { Talks } from '../../components/Talks';
-import { useRoom } from '../../Hooks/useRoom';
-import { useAuthStateChanged } from '../../Hooks/useAuthStateChanged';
+import { useRoom } from '../../hooks/useRoom';
+import { useAuthStateChanged } from '../../hooks/useAuthStateChanged';
 import {logoutInitiate} from '../../Redux/actions';
 
 import logoImg from '../../assets/images/logo.svg';

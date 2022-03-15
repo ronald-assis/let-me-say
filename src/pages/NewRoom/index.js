@@ -4,7 +4,7 @@ import {  useSelector } from 'react-redux';
 
 import { Button } from '../../components/Button';
 import {database} from '../../services/firebase';
-import { useAuthStateChanged } from '../../Hooks/useAuthStateChanged';
+import { useAuthStateChanged } from '../../hooks/useAuthStateChanged';
 
 import illustrationImg from '../../assets/images/illustration.svg';
 import logoImg from '../../assets/images/logo.svg';
