@@ -141,6 +141,16 @@
      main {
        width: 80%;
        margin: auto;
+
+      form {
+        .form-footer {          
+          .button {
+            width: 110px;
+            font-size: 14px;
+            padding: 0;
+          }
+        }
+      }
      }
   }
 }
